@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixel & Paper — Web Design & Development Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ============ TOKENS ============ */
+:root{
+  --paper:#EDE6D6;
+  --paper-dark:#E1D7BE;
+  --paper-line: rgba(27,42,74,0.09);
+  --ink:#1B2A4A;
+  --ink-deep:#12203A;
+  --mustard:#D98E04;
+  --mustard-deep:#B67500;
+  --teal:#2F6E62;
+  --rust:#A62639;
+  --charcoal:#241F1B;
+  --white:#FBF8F2;
+  --card:#F6F1E4;
+  --shadow: 0 10px 30px rgba(18,32,58,0.16);
+  --radius: 3px;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--paper);
+  color:var(--charcoal);
+  font-family:'Inter', sans-serif;
+  line-height:1.55;
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+h1,h2,h3, .display{
+  font-family:'Space Grotesk', sans-serif;
+  color:var(--ink-deep);
+  letter-spacing:-0.01em;
+}
+
+.mono{
+  font-family:'IBM Plex Mono', monospace;
+  letter-spacing:0.02em;
+}
+
+a{color:inherit; text-decoration:none;}
+img{max-width:100%; display:block;}
+ul{list-style:none;}
+
+.wrap{
+  max-width:1160px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
+}
+
+/* ============ REVEAL ANIMATION ============ */
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.reveal.is-visible{opacity:1; transform:translateY(0);}
+
+/* ============ NAV ============ */
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(237,230,214,0.92);
+  backdrop-filter: blur(6px);
+  border-bottom:1.5px solid var(--ink);
+}
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 28px;
+  max-width:1160px;
+  margin:0 auto;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:700;
+  font-size:1.15rem;
+  color:var(--ink-deep);
+}
+.brand .stamp-badge{
+  width:34px;height:34px;
+  border:2px solid var(--ink-deep);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.68rem;
+  font-weight:600;
+  transform:rotate(-8deg);
+  flex-shrink:0;
+}
+.nav-links{
+  display:flex;
+  gap:30px;
+  font-size:0.92rem;
+  font-weight:500;
+}
+.nav-links a{
+  position:relative;
+  padding:4px 0;
+}
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0; bottom:0;
+  width:0%; height:2px;
+  background:var(--mustard-deep);
+  transition:width .25s ease;
+}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{
+  background:var(--ink-deep);
+  color:var(--white);
+  padding:9px 18px;
+  border-radius:var(--radius);
+  font-size:0.86rem;
+  font-weight:600;
+  border:1.5px solid var(--ink-deep);
+}
+.nav-cta:hover{background:transparent; color:var(--ink-deep);}
+.menu-toggle{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:6px;
+}
+.menu-toggle span{
+  width:24px; height:2px; background:var(--ink-deep); display:block;
+}
+
+/* ============ HERO ============ */
+.hero{
+  padding:88px 0 70px;
+  position:relative;
+  overflow:hidden;
+}
+.hero .wrap{
+  display:grid;
+  grid-template-columns:1.3fr 0.9fr;
+  gap:50px;
+  align-items:center;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:0.75rem;
+  font-weight:600;
+  color:var(--rust);
+  background:var(--card);
+  border:1.3px solid var(--rust);
+  padding:6px 12px;
+  border-radius:20px;
+  transform:rotate(-1.2deg);
+  margin-bottom:22px;
+}
+.eyebrow::before{content:"●"; font-size:0.55rem;}
+.hero h1{
+  font-size:clamp(2.3rem, 4.6vw, 3.6rem);
+  font-weight:700;
+  line-height:1.08;
+  margin-bottom:22px;
+}
+.hero h1 .underline{
+  position:relative;
+  white-space:nowrap;
+}
+.hero h1 .underline::after{
+  content:"";
+  position:absolute;
+  left:-2%; right:-2%; bottom:0.02em;
+  height:0.32em;
+  background:var(--mustard);
+  z-index:-1;
+  opacity:0.65;
+}
+.hero p.lead{
+  font-size:1.08rem;
+  color:#4A4238;
+  max-width:46ch;
+  margin-bottom:34px;
+}
+.hero-actions{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:40px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:13px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  font-size:0.95rem;
+  cursor:pointer;
+  border:1.8px solid var(--ink-deep);
+  transition: transform .18s ease, background .2s ease, color .2s ease;
+}
+.btn-solid{
+  background:var(--ink-deep);
+  color:var(--white);
+}
+.btn-solid:hover{transform:translateY(-2px); background:var(--rust); border-color:var(--rust);}
+.btn-outline{
+  background:transparent;
+  color:var(--ink-deep);
+}
+.btn-outline:hover{transform:translateY(-2px); background:var(--ink-deep); color:var(--white);}
+
+.stats-row{
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+}
+.stat{
+  font-family:'IBM Plex Mono', monospace;
+}
+.stat .num{
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--ink-deep);
+  display:block;
+}
+.stat .label{
+  font-size:0.72rem;
+  color:#6b6156;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+
+/* hero side card: a "ficha tecnica" stamped index card */
+.hero-card{
+  background:var(--card);
+  border:1.6px solid var(--ink);
+  border-radius:6px;
+  padding:26px 24px;
+  box-shadow:var(--shadow);
+  transform:rotate(2deg);
+  position:relative;
+}
+.hero-card::before{
+  content:"";
+  position:absolute;
+  top:-14px; left:50%;
+  transform:translateX(-50%) rotate(-6deg);
+  width:46px; height:16px;
+  background:#D8C79A;
+  opacity:0.85;
+  box-shadow:0 2px 4px rgba(0,0,0,0.15);
+}
+.hero-card h3{
+  font-size:0.72rem;
+  font-family:'IBM Plex Mono', monospace;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--teal);
+  margin-bottom:14px;
+  border-bottom:1px dashed rgba(27,42,74,0.3);
+  padding-bottom:10px;
+}
+.hero-card ul{
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+}
+.hero-card li{
+  display:flex;
+  justify-content:space-between;
+  font-size:0.86rem;
+}
+.hero-card li span:first-child{color:#5c5347;}
+.hero-card li span:last-child{
+  font-family:'IBM Plex Mono', monospace;
+  font-weight:600;
+  color:var(--ink-deep);
+}
+.hero-card .stamp-ok{
+  margin-top:18px;
+  display:inline-block;
+  border:2.5px solid var(--rust);
+  color:var(--rust);
+  font-family:'IBM Plex Mono', monospace;
+  font-weight:700;
+  font-size:0.72rem;
+  padding:6px 14px;
+  border-radius:4px;
+  transform:rotate(-4deg);
+  letter-spacing:0.05em;
+}
+
+/* ============ SECTION HEADERS ============ */
+.section{padding:90px 0;}
+.section-head{
+  max-width:640px;
+  margin-bottom:56px;
+}
+.section-tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.75rem;
+  color:var(--teal);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:12px;
+  display:block;
+}
+.section-head h2{
+  font-size:clamp(1.7rem, 3vw, 2.3rem);
+  font-weight:700;
+}
+.section-head p{
+  color:#4A4238;
+  margin-top:14px;
+  font-size:1.02rem;
+}
+
+/* ============ PROCESO ============ */
+.proceso{
+  background:var(--ink-deep);
+  color:var(--paper);
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size:34px 34px;
+}
+.proceso .section-tag{color:var(--mustard);}
+.proceso .section-head h2{color:var(--white);}
+.proceso .section-head p{color:#C8C2B4;}
+.proceso-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:0;
+  border-top:1px solid rgba(251,248,242,0.18);
+}
+.proceso-item{
+  padding:30px 26px;
+  border-right:1px solid rgba(251,248,242,0.18);
+  position:relative;
+}
+.proceso-item:last-child{border-right:none;}
+.proceso-item .step-num{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.78rem;
+  color:var(--mustard);
+  font-weight:600;
+  margin-bottom:16px;
+  display:block;
+}
+.proceso-item h3{
+  color:var(--white);
+  font-size:1.08rem;
+  margin-bottom:10px;
+}
+.proceso-item p{
+  color:#B7B0A1;
+  font-size:0.9rem;
+}
+
+/* ============ PROYECTOS — corcho ============ */
+.corcho{
+  background:
+    radial-gradient(circle at 18% 22%, rgba(0,0,0,0.05), transparent 45%),
+    radial-gradient(circle at 82% 68%, rgba(0,0,0,0.05), transparent 45%),
+    var(--paper-dark);
+  border-top:1.5px solid var(--ink);
+  border-bottom:1.5px solid var(--ink);
+  position:relative;
+}
+.project-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:34px;
+  position:relative;
+}
+.project-card{
+  background:var(--card);
+  border-radius:6px;
+  box-shadow:var(--shadow);
+  padding-bottom:18px;
+  position:relative;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.project-card:hover{transform:translateY(-6px) rotate(-0.4deg); box-shadow:0 18px 34px rgba(18,32,58,0.24);}
+.pin{
+  position:absolute;
+  top:-9px; left:24px;
+  width:16px; height:16px;
+  border-radius:50%;
+  background:var(--rust);
+  box-shadow:0 3px 4px rgba(0,0,0,0.3), inset -2px -2px 3px rgba(0,0,0,0.25);
+  z-index:3;
+}
+.project-card.featured .pin{background:var(--mustard-deep);}
+.browser-mock{
+  border-radius:6px 6px 0 0;
+  overflow:hidden;
+  border-bottom:1.5px solid var(--ink);
+}
+.browser-bar{
+  background:var(--ink-deep);
+  padding:9px 12px;
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+.browser-bar span{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(251,248,242,0.35);
+}
+.browser-bar .url{
+  margin-left:10px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.62rem;
+  color:rgba(251,248,242,0.55);
+}
+.mock-body{
+  height:132px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.mock-body .line{border-radius:2px;}
+.mock-l1{height:10px; width:55%;}
+.mock-l2{height:6px; width:80%;}
+.mock-l3{height:6px; width:65%;}
+.mock-row{display:flex; gap:8px; margin-top:auto;}
+.mock-box{flex:1; border-radius:3px; height:34px;}
+
+.project-info{padding:18px 20px 0;}
+.project-info .ptype{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.68rem;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--teal);
+  margin-bottom:6px;
+  display:block;
+}
+.project-info h3{font-size:1.08rem; margin-bottom:6px;}
+.project-info p{font-size:0.86rem; color:#5c5347;}
+
+.thread-note{
+  grid-column:1 / -1;
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+  margin-top:8px;
+  padding:0 6px;
+}
+.thread-note .thread-line{
+  width:60px; height:2px;
+  background:var(--rust);
+  margin-top:14px;
+  flex-shrink:0;
+  position:relative;
+}
+.thread-note .thread-line::after{
+  content:"";
+  position:absolute; right:-4px; top:-4px;
+  width:10px; height:10px;
+  border-radius:50%;
+  background:var(--rust);
+}
+.thread-note p{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.82rem;
+  color:var(--ink-deep);
+  transform:rotate(-0.6deg);
+  max-width:44ch;
+}
+
+/* ============ SERVICIOS ============ */
+.servicios-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:22px;
+}
+.servicio-card{
+  border:1.6px solid var(--ink);
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:26px 24px;
+  position:relative;
+}
+.servicio-card .tagno{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.7rem;
+  color:var(--rust);
+  position:absolute;
+  top:16px; right:18px;
+}
+.servicio-card h3{font-size:1.05rem; margin-bottom:10px; padding-right:34px;}
+.servicio-card p{font-size:0.88rem; color:#5c5347;}
+
+/* ============ CONTACTO — postal ============ */
+.contacto{
+  background:var(--ink-deep);
+  color:var(--paper);
+}
+.postal{
+  background:var(--card);
+  border-radius:8px;
+  box-shadow:var(--shadow);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  overflow:hidden;
+  color:var(--charcoal);
+}
+.postal-left{
+  padding:44px 40px;
+  border-right:1.5px dashed rgba(27,42,74,0.35);
+}
+.postal-left .section-tag{margin-bottom:14px;}
+.postal-left h2{font-size:1.7rem; margin-bottom:16px;}
+.postal-left p{color:#4A4238; margin-bottom:26px;}
+.postal-left .direct{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.92rem;
+  color:var(--ink-deep);
+  border-top:1px dashed rgba(27,42,74,0.35);
+  padding-top:18px;
+}
+.stamp-box{
+  position:absolute;
+  width:64px; height:78px;
+  border:2px dashed var(--rust);
+  border-radius:4px;
+  top:24px; right:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.6rem;
+  color:var(--rust);
+  text-align:center;
+  line-height:1.3;
+  transform:rotate(4deg);
+}
+.postal-right{
+  padding:44px 40px;
+  position:relative;
+}
+.field{margin-bottom:18px;}
+.field label{
+  display:block;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.72rem;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--teal);
+  margin-bottom:6px;
+}
+.field input, .field textarea{
+  width:100%;
+  border:none;
+  border-bottom:1.6px solid var(--ink);
+  background:transparent;
+  padding:9px 2px;
+  font-family:'Inter', sans-serif;
+  font-size:0.95rem;
+  color:var(--charcoal);
+}
+.field textarea{
+  resize:vertical;
+  min-height:96px;
+  border:1.6px dashed var(--ink);
+  border-radius:10px;
+  padding:12px 14px;
+  line-height:1.5;
+  background:rgba(255,255,255,0.35);
+}
+.field textarea:focus{border-color:var(--rust); border-style:solid;}
+.field input:focus, .field textarea:focus{
+  outline:none;
+  border-bottom-color:var(--rust);
+}
+.send-btn{
+  width:100%;
+  margin-top:6px;
+}
+
+/* ============ FOOTER ============ */
+footer{
+  background:var(--ink-deep);
+  color:#B7B0A1;
+  padding:26px 0 34px;
+  border-top:1px solid rgba(251,248,242,0.18);
+}
+.footer-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  font-size:0.8rem;
+  font-family:'IBM Plex Mono', monospace;
+}
+
+/* ============ FOCUS STATES ============ */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+  outline:2.5px solid var(--rust);
+  outline-offset:3px;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 980px){
+  .hero .wrap{grid-template-columns:1fr; gap:44px;}
+  .hero-card{max-width:380px;}
+  .proceso-grid{grid-template-columns:repeat(2, 1fr);}
+  .proceso-item{border-bottom:1px solid rgba(251,248,242,0.18);}
+  .project-grid{grid-template-columns:repeat(2, 1fr);}
+  .servicios-grid{grid-template-columns:repeat(2, 1fr);}
+  .postal{grid-template-columns:1fr;}
+  .postal-left{border-right:none; border-bottom:1.5px dashed rgba(27,42,74,0.35);}
+}
+
+@media (max-width: 680px){
+  .nav-links{
+    position:absolute;
+    top:100%; left:0; right:0;
+    background:var(--paper);
+    flex-direction:column;
+    gap:0;
+    border-bottom:1.5px solid var(--ink);
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{max-height:320px;}
+  .nav-links a{padding:16px 28px; width:100%; border-top:1px solid rgba(27,42,74,0.12);}
+  .nav-cta{display:none;}
+  .menu-toggle{display:flex;}
+  .proceso-grid{grid-template-columns:1fr;}
+  .proceso-item{border-right:none;}
+  .project-grid{grid-template-columns:1fr;}
+  .servicios-grid{grid-template-columns:1fr;}
+  .thread-note{flex-direction:column;}
+  .thread-note .thread-line{display:none;}
+  .stamp-box{display:none;}
+  .stats-row{gap:20px;}
+  .section{padding:64px 0;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="#top" class="brand">
+      <span class="stamp-badge">P&amp;P</span>
+      Pixel &amp; Paper
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get in touch</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Web design &amp; development studio</span>
+        <h1>Websites <span class="underline">handcrafted</span>, built with code.</h1>
+        <p class="lead">I design and build custom websites for businesses and projects that want to look just as good on a phone as on a big screen. Every site starts as a paper sketch before a single line of code gets written.</p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-solid">See the work →</a>
+          <a href="#contact" class="btn btn-outline">Let's talk about your site</a>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><span class="num">30+</span><span class="label">Projects delivered</span></div>
+          <div class="stat"><span class="num">100%</span><span class="label">Responsive design</span></div>
+          <div class="stat"><span class="num">&lt;2s</span><span class="label">Average load time</span></div>
+        </div>
+      </div>
+
+      <div class="hero-card reveal">
+        <h3>Spec sheet</h3>
+        <ul>
+          <li><span>Markup</span><span>HTML / CSS</span></li>
+          <li><span>Interactivity</span><span>JavaScript</span></li>
+          <li><span>Design</span><span>Mobile-first</span></li>
+          <li><span>Performance</span><span>Optimized</span></li>
+          <li><span>Delivery</span><span>2–4 weeks</span></li>
+        </ul>
+        <span class="stamp-ok">✓ Production ready</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section class="section proceso" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-tag">How I work</span>
+        <h2>From notebook to screen, in four steps</h2>
+        <p>No site starts with code. This is the path every project follows, from the first sketch to launch day.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="proceso-grid">
+        <div class="proceso-item reveal">
+          <span class="step-num">01 — Sketch</span>
+          <h3>Understand the project</h3>
+          <p>We talk about your business, who's going to visit the site, and what the page needs to achieve.</p>
+        </div>
+        <div class="proceso-item reveal">
+          <span class="step-num">02 — Design</span>
+          <h3>Define the style</h3>
+          <p>I propose a palette, typography, and structure before writing any code, with your input at every step.</p>
+        </div>
+        <div class="proceso-item reveal">
+          <span class="step-num">03 — Build</span>
+          <h3>Build it from scratch</h3>
+          <p>I code the site from the ground up, responsive and fast, with no generic templates involved.</p>
+        </div>
+        <div class="proceso-item reveal">
+          <span class="step-num">04 — Launch</span>
+          <h3>Ship and fine-tune</h3>
+          <p>We review it together across devices and make the final tweaks before it goes live.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTOS -->
+  <section class="section corcho" id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-tag">Project corkboard</span>
+        <h2>A few of the sites I've built</h2>
+        <p>Each card is an actual mockup of the site's structure — this is what the page looks like before the final content goes in.</p>
+      </div>
+
+      <div class="project-grid">
+
+        <div class="project-card featured reveal">
+          <div class="pin"></div>
+          <div class="browser-mock">
+            <div class="browser-bar">
+              <span></span><span></span><span></span>
+              <span class="url">valleyflavors.com</span>
+            </div>
+            <div class="mock-body" style="background:#FBF3E4;">
+              <div class="line mock-l1" style="background:#A62639;"></div>
+              <div class="line mock-l2" style="background:#c9b89a;"></div>
+              <div class="line mock-l3" style="background:#c9b89a;"></div>
+              <div class="mock-row">
+                <div class="mock-box" style="background:#D98E04;"></div>
+                <div class="mock-box" style="background:#2F6E62;"></div>
+                <div class="mock-box" style="background:#1B2A4A;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="ptype">Restaurant · Site + digital menu</span>
+            <h3>Valley Flavors</h3>
+            <p>Interactive menu, reservations, and a dish gallery, designed mobile-first.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="pin"></div>
+          <div class="browser-mock">
+            <div class="browser-bar">
+              <span></span><span></span><span></span>
+              <span class="url">freewheel.shop</span>
+            </div>
+            <div class="mock-body" style="background:#EFF4F2;">
+              <div class="line mock-l1" style="background:#2F6E62;"></div>
+              <div class="line mock-l2" style="background:#b7c9c3;"></div>
+              <div class="line mock-l3" style="background:#b7c9c3;"></div>
+              <div class="mock-row">
+                <div class="mock-box" style="background:#2F6E62;"></div>
+                <div class="mock-box" style="background:#D98E04;"></div>
+                <div class="mock-box" style="background:#2F6E62;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="ptype">Online store · E-commerce</span>
+            <h3>Free Wheel</h3>
+            <p>Bike catalog with filters by type and a simple shopping cart.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="pin"></div>
+          <div class="browser-mock">
+            <div class="browser-bar">
+              <span></span><span></span><span></span>
+              <span class="url">studiolumen.com</span>
+            </div>
+            <div class="mock-body" style="background:#1B2A4A;">
+              <div class="line mock-l1" style="background:#D98E04;"></div>
+              <div class="line mock-l2" style="background:#5a6a8c;"></div>
+              <div class="line mock-l3" style="background:#5a6a8c;"></div>
+              <div class="mock-row">
+                <div class="mock-box" style="background:#3b4c76;"></div>
+                <div class="mock-box" style="background:#3b4c76;"></div>
+                <div class="mock-box" style="background:#D98E04;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="ptype">Photography · Portfolio</span>
+            <h3>Studio Lumen</h3>
+            <p>Full-screen gallery with progressive image loading for heavy portfolios.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="pin"></div>
+          <div class="browser-mock">
+            <div class="browser-bar">
+              <span></span><span></span><span></span>
+              <span class="url">northlegal.com</span>
+            </div>
+            <div class="mock-body" style="background:#F1EEE6;">
+              <div class="line mock-l1" style="background:#1B2A4A;"></div>
+              <div class="line mock-l2" style="background:#cfc9ba;"></div>
+              <div class="line mock-l3" style="background:#cfc9ba;"></div>
+              <div class="mock-row">
+                <div class="mock-box" style="background:#1B2A4A;"></div>
+                <div class="mock-box" style="background:#A62639;"></div>
+                <div class="mock-box" style="background:#1B2A4A;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="ptype">Law firm · Corporate site</span>
+            <h3>North Legal</h3>
+            <p>Institutional site with practice areas, team page, and a consultation form.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="pin"></div>
+          <div class="browser-mock">
+            <div class="browser-bar">
+              <span></span><span></span><span></span>
+              <span class="url">greenlife.shop</span>
+            </div>
+            <div class="mock-body" style="background:#EDF3EA;">
+              <div class="line mock-l1" style="background:#3f7a4d;"></div>
+              <div class="line mock-l2" style="background:#bcd0bb;"></div>
+              <div class="line mock-l3" style="background:#bcd0bb;"></div>
+              <div class="mock-row">
+                <div class="mock-box" style="background:#3f7a4d;"></div>
+                <div class="mock-box" style="background:#D98E04;"></div>
+                <div class="mock-box" style="background:#3f7a4d;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="ptype">Plant nursery · Landing page</span>
+            <h3>Green Life</h3>
+            <p>Single-page landing with a plant catalog and store location.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="pin"></div>
+          <div class="browser-mock">
+            <div class="browser-bar">
+              <span></span><span></span><span></span>
+              <span class="url">localrhythm.band</span>
+            </div>
+            <div class="mock-body" style="background:#241F1B;">
+              <div class="line mock-l1" style="background:#A62639;"></div>
+              <div class="line mock-l2" style="background:#5c5347;"></div>
+              <div class="line mock-l3" style="background:#5c5347;"></div>
+              <div class="mock-row">
+                <div class="mock-box" style="background:#A62639;"></div>
+                <div class="mock-box" style="background:#D98E04;"></div>
+                <div class="mock-box" style="background:#5c5347;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="ptype">Music band · Event</span>
+            <h3>Local Rhythm</h3>
+            <p>One-scroll page with show dates, embedded music, and ticket sales.</p>
+          </div>
+        </div>
+
+        <div class="thread-note reveal">
+          <div class="thread-line"></div>
+          <p>« Valley Flavors doubled its reservations in the first month — the favorite of this batch. »</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-tag">Services</span>
+        <h2>How I can help</h2>
+        <p>From a brand new site to maintaining one you already have.</p>
+      </div>
+      <div class="servicios-grid">
+        <div class="servicio-card reveal">
+          <span class="tagno mono">A</span>
+          <h3>Responsive design</h3>
+          <p>Sites that adapt to any screen, from phone to desktop, without losing clarity.</p>
+        </div>
+        <div class="servicio-card reveal">
+          <span class="tagno mono">B</span>
+          <h3>Custom development</h3>
+          <p>Original code, no pre-built templates, made for what your project actually needs.</p>
+        </div>
+        <div class="servicio-card reveal">
+          <span class="tagno mono">C</span>
+          <h3>Online stores</h3>
+          <p>Simple catalogs and shopping carts that are easy for you to manage afterward.</p>
+        </div>
+        <div class="servicio-card reveal">
+          <span class="tagno mono">D</span>
+          <h3>Basic SEO</h3>
+          <p>Proper structure and metadata so your site shows up when people search for it.</p>
+        </div>
+        <div class="servicio-card reveal">
+          <span class="tagno mono">E</span>
+          <h3>Maintenance</h3>
+          <p>Content updates, fixes, and improvements after launch.</p>
+        </div>
+        <div class="servicio-card reveal">
+          <span class="tagno mono">F</span>
+          <h3>Redesign</h3>
+          <p>If you already have a site but it looks dated or doesn't work well on mobile, I'll refresh it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="section contacto" id="contact">
+    <div class="wrap">
+      <div class="postal reveal" style="position:relative;">
+        <div class="stamp-box">POSTAGE<br>PAID<br>P&amp;P</div>
+        <div class="postal-left">
+          <span class="section-tag">Contact</span>
+          <h2>Let's shape your site</h2>
+          <p>Tell me about your project, call...</p>
+          <div class="direct">
+            +52 618 803 2263
+          </div>
+        </div>
+        <div class="postal-right">
+          <form onsubmit="event.preventDefault(); this.querySelector('.send-btn').textContent='Sent ✓';">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" type="text" placeholder="What's your name?" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="msg">Tell me about your project</label>
+              <textarea id="msg" placeholder="Type of business, what the site needs, ideal launch date..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-solid send-btn">Send message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© 2026 Pixel &amp; Paper — Web design and development</span>
+    <span>Built with HTML, CSS, and JS — no templates.</span>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Reveal on scroll
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  }
+</script>
+
+</body>
+</html>
